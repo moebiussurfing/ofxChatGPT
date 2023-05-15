@@ -10,6 +10,11 @@ void ChatThread::setup(string model, string apiKey) {
     chatGPT.setModel(model);
 }
 
+void ChatThread::setup(string apiKey) {
+    // setup chatGPT
+    chatGPT.setup(apiKey);
+}
+
 void ChatThread::threadedFunction() {
     tuple<string, ofxChatGPT::ErrorCode> response;
     

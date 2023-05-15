@@ -7,6 +7,7 @@ public:
     ChatThread();
 
     void setup(string model, string apiKey);
+    void setup(string apiKey);
     void threadedFunction() override;
 
     // Check if waiting for GPT response
@@ -18,7 +19,7 @@ public:
 
     // If a request is already in progress, calls to chatAsync, chatWithHistoryAsync, 
     // and regenerateAsync will be ignored. This ensures that only one request is 
-    // processed at a time, preventing potential conflicts or overlapping requests.
+    // processed at a time, preventing potential conflicts or overlappin`g requests.
         
     // Send a chat request asynchronously
     void chatAsync(string msg);
@@ -33,8 +34,9 @@ public:
     // Retrieved messages are removed from the list
     tuple<string, ofxChatGPT::ErrorCode> getMessage();
 
-private:
     ofxChatGPT chatGPT;
+
+private:
     string requestingMessage;
     enum RequestType {
         Chat,

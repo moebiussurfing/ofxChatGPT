@@ -69,9 +69,9 @@ public:
     
     void eraseConversation(int beginIndex, int endIndex);
 
-private:
-    string apiKey;
     string modelName;
+    string apiKey;
+private:
     vector<ofJson> conversation;
     
     // Helper function to send an HTTP request to the specified URL.

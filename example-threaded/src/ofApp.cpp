@@ -38,15 +38,15 @@ void ofApp::setup() {
 	}
 
 	// Model
-	string model = "gpt-3.5-turbo";
+	//string model = "gpt-3.5-turbo";
 	//string model = "davinci";
-	//string model = "gpt-4";
+	string model = "gpt-4";
 
 	chat.setup(model, apiKey);
 
 	// create prompts
 	prompts.clear();
-	prompts.push_back(std::pair<std::string, std::string> { "5 short sentences.", GPT_Prompt_0() });
+	prompts.push_back(std::pair<std::string, std::string> { "10 short sentences.", GPT_Prompt_0() });
 	prompts.push_back(std::pair<std::string, std::string> {  "10 words list.", GPT_Prompt_1() });
 	prompts.push_back(std::pair<std::string, std::string> { "Similar bands", GPT_Prompt_2() });
 
@@ -180,6 +180,16 @@ void ofApp::draw()
 		y = ofGetHeight() / 2 - bb.getHeight() / 2;
 		ofDrawBitmapStringHighlight(s, x, y, ofColor::red, ofColor::black);
 	}
+
+	{
+		s = chat.chatGPT.apiKey + "\n";
+		s += chat.chatGPT.modelName;
+		auto bb = f.getBoundingBox(s, 0, 0);
+		x = ofGetWidth() / 2 - bb.getWidth() / 2;
+		y = ofGetHeight() - bb.getHeight() / 2 - 50;
+		ofDrawBitmapStringHighlight(s, x, y);
+	}
+
 }
 
 void ofApp::keyPressed(ofKeyEventArgs& key) {

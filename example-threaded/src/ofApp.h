@@ -52,7 +52,7 @@ Words will be sorted starting from less to more relevance.
 		return R"(
 I want you to act as a music critic.
 As a LastFm maintainer.
-I will give you a band name. You will list the 5 more similar bands.
+I will give you a band name. You will list the 10 more similar bands.
 You will only reply that band names list, and nothing else. 
 But you must sort that bands, from older to newer. 
 )";
