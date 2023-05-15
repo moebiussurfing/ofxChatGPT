@@ -4,8 +4,8 @@ void ofApp::setup() {
 	ofSetLogLevel(OF_LOG_VERBOSE);
 
 	ofFile f;
-	if (f.doesFileExist("config.json")) {
-		ofJson configJson = ofLoadJson("config.json");
+	if (f.doesFileExist("GptChat_ConfigKey.json")) {
+		ofJson configJson = ofLoadJson("GptChat_ConfigKey.json");
 		apiKey = configJson["apiKey"].get<string>();//will fail if file do not exist
 	}
 	else apiKey = "your-api-key";
@@ -236,5 +236,5 @@ void ofApp::exit() {
 
 	ofJson configJson;
 	configJson["apiKey"] = apiKey;
-	ofSavePrettyJson("config.json", configJson);
+	ofSavePrettyJson("GptChat_ConfigKey.json", configJson);
 }

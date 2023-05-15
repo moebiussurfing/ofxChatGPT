@@ -1,3 +1,13 @@
+/*
+
+    TODO
+
+    add temperature input
+    add amount tokens
+    add model select
+
+*/
+
 #pragma once
 
 #include "ofMain.h"
@@ -5,6 +15,7 @@
 class ofxChatGPT {
 public:
     ofxChatGPT();
+    ~ofxChatGPT();
     
     // Error codes for various error conditions.
     enum ErrorCode {
@@ -72,6 +83,9 @@ private:
     float temperature;
     float timeoutSec;
     
-    static const string endpoint;
+    string urlModels = "https://api.openai.com/v1/models";
+    string urlEndpoint = "https://api.openai.com/v1/chat/completions";
+
+    void exit();
 };
 

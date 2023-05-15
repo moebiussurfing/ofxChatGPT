@@ -1,32 +1,35 @@
 #include "ofxChatGPT.h"
 
-//const string ofxChatGPT::endpoint = "https://api.openai.com/v1/chat/completions";
-
-const string ofxChatGPT::endpoint = "https://api.pawan.krd/v1/chat/completions";
-/*
-curl --location 'https://api.pawan.krd/v1/completions' \
---header 'Authorization: Bearer pk-***[OUR_API_KEY]***' \
---header 'Content-Type: application/json' \
---data '{
-"model": "text-davinci-003",
-"prompt" : "Human: Hello\\nAI:",
-"temperature" : 0.7,
-"max_tokens" : 256,
-"stop" : [
-    "Human:",
-        "AI:"
-]
-}'
-*/
-
 ofxChatGPT::ofxChatGPT() {
     temperature = 0.5;
     timeoutSec = 60;
 }
 
+ofxChatGPT::~ofxChatGPT() {
+    exit();
+}
+
+void ofxChatGPT::exit() {
+    ofJson configJson;
+    configJson["urlModels"] = urlModels;
+    configJson["urlEndpoint"] = urlEndpoint;
+    ofSavePrettyJson("GptChat_ConfigServer.json", configJson);
+}
+
 void ofxChatGPT::setup(string apiKey) {
     this->apiKey = apiKey;
     modelName = "gpt-3.5-turbo"; // default model
+
+    ofFile f;
+    if (f.doesFileExist("GptChat_ConfigServer.json")) {
+        ofJson configJson = ofLoadJson("GptChat_ConfigServer.json");
+        urlModels = configJson["urlModels"].get<string>();
+        urlEndpoint = configJson["urlEndpoint"].get<string>();
+    }
+    else {
+        string urlModels = "https://api.openai.com/v1/models";
+        string urlEndpoint = "https://api.openai.com/v1/chat/completions";
+    }
 }
 
 void ofxChatGPT::setSystem(const string &message) {
@@ -44,7 +47,7 @@ tuple<string, ofxChatGPT::ErrorCode> ofxChatGPT::chat(const string &message) {
     requestBody["temperature"] = 0.5;
     ofLogVerbose("ofxChatGPT") << "SendData: " << requestBody.dump();
 
-    ofHttpResponse response = sendRequest(endpoint, requestBody.dump());
+    ofHttpResponse response = sendRequest(urlEndpoint, requestBody.dump());
 
     // Handle the response from ChatGPT.
     if (response.status == 200) {
@@ -74,7 +77,7 @@ tuple<string, ofxChatGPT::ErrorCode> ofxChatGPT::chatWithHistory(const string &m
 
     ofLogVerbose("ofxChatGPT") << "SendData: " << requestBody.dump();
 
-    ofHttpResponse response = sendRequest(endpoint, requestBody.dump());
+    ofHttpResponse response = sendRequest(urlEndpoint, requestBody.dump());
 
     // Handle the response from ChatGPT.
     if (response.status == 200) {
@@ -117,7 +120,7 @@ tuple<string, ofxChatGPT::ErrorCode> ofxChatGPT::chatRegenerate() {
 
     ofLogVerbose("ofxChatGPT") << "SendData: " << requestBody.dump();
 
-    ofHttpResponse response = sendRequest(endpoint, requestBody.dump());
+    ofHttpResponse response = sendRequest(urlEndpoint, requestBody.dump());
 
     // Handle the response from ChatGPT.
     if (response.status == 200) {
@@ -147,10 +150,9 @@ void ofxChatGPT::setModel(const string model) {
 
 // Get the list of available models from the API.
 tuple<vector<string>, ofxChatGPT::ErrorCode> ofxChatGPT::getModelList() {
-    //string url = "https://api.openai.com/v1/models";
-    string url = "https://api.pawan.krd/v1/models";
+
     ofHttpRequest request;
-    request.url = url;
+    request.url = urlModels;
     request.method = ofHttpRequest::Method::GET;
     request.headers["Authorization"] = "Bearer " + apiKey;
 
