@@ -3,6 +3,7 @@
 void ofApp::setup() {
 	ofSetLogLevel(OF_LOG_VERBOSE);
 
+	// file settings
 	ofFile f;
 	if (f.doesFileExist("GptChat_ConfigKey.json")) {
 		ofJson configJson = ofLoadJson("GptChat_ConfigKey.json");
