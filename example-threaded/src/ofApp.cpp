@@ -13,19 +13,19 @@ void ofApp::setup() {
 	ofxChatGPT chappy;
 	chappy.setup(apiKey);
 	vector<string> models;
-	ofxChatGPT::ErrorCode err;
-	tie(models, err) = chappy.getModelList();
+	ofxChatGPT::ErrorCode errorCode;
+	tie(models, errorCode) = chappy.getModelList();
 	ofLogNotice("ofApp") << "Available OpenAI GPT models:";
 
-	if (err == ofxChatGPT::Success)
+	if (errorCode == ofxChatGPT::Success)
 	{
 		strError = "";
 		bError = false;
 	}
 	else
 	{
-		ofLogError("ofApp") << "ofxChatGPT has an error. " << ofxChatGPT::getErrorMessage(err);
-		string message = "Error: " + ofxChatGPT::getErrorMessage(err);
+		ofLogError("ofApp") << "ofxChatGPT has an error. " << ofxChatGPT::getErrorMessage(errorCode);
+		string message = "Error: " + ofxChatGPT::getErrorMessage(errorCode);
 
 		strError = message;
 		bError = true;

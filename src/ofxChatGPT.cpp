@@ -30,7 +30,9 @@ void ofxChatGPT::setup(string apiKey) {
 	else {
 		urlModels = "https://api.openai.com/v1/models";
 		urlEndpoint = "https://api.openai.com/v1/chat/completions";
-		modelName = "gpt-3.5-turbo"; // default model
+		// default model
+		//modelName = "gpt-4"; 
+		modelName = "gpt-3.5-turbo"; 
 	}
 }
 
