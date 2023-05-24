@@ -13,7 +13,7 @@ void ofxChatGPT::exit() {
 	ofJson configJson;
 	configJson["urlModels"] = urlModels;
 	configJson["urlEndpoint"] = urlEndpoint;
-	configJson["modelName"] = modelName;
+	//configJson["modelName"] = modelName;
 	ofSavePrettyJson("GptChat_ConfigServer.json", configJson);
 }
 
@@ -25,7 +25,7 @@ void ofxChatGPT::setup(string apiKey) {
 		ofJson configJson = ofLoadJson("GptChat_ConfigServer.json");
 		urlModels = configJson["urlModels"].get<string>();
 		urlEndpoint = configJson["urlEndpoint"].get<string>();
-		modelName = configJson["modelName"].get<string>();
+		//modelName = configJson["modelName"].get<string>();
 	}
 	else {
 		urlModels = "https://api.openai.com/v1/models";
@@ -49,7 +49,7 @@ tuple<string, ofxChatGPT::ErrorCode> ofxChatGPT::chat(const string& message) {
 	requestBody["model"] = modelName;
 	requestBody["messages"].push_back({ {"role", "user"}, {"content", message} });
 	requestBody["temperature"] = 0.5;
-	ofLogVerbose("ofxChatGPT") << "SendData: " << requestBody.dump();
+	ofLogVerbose("ofxChatGPT") << "SendData: " << requestBody.dump(4);
 
 	ofHttpResponse response = sendRequest(urlEndpoint, requestBody.dump());
 
@@ -80,7 +80,7 @@ tuple<string, ofxChatGPT::ErrorCode> ofxChatGPT::chatWithHistory(const string& m
 	requestBody["messages"] = conversation;
 	requestBody["temperature"] = temperature;
 
-	ofLogVerbose("ofxChatGPT") << "SendData: " << requestBody.dump();
+	ofLogVerbose("ofxChatGPT") << "SendData: " << requestBody.dump(4);
 
 	ofHttpResponse response = sendRequest(urlEndpoint, requestBody.dump());
 
@@ -124,7 +124,7 @@ tuple<string, ofxChatGPT::ErrorCode> ofxChatGPT::chatRegenerate() {
 	requestBody["messages"] = conversation;
 	requestBody["temperature"] = temperature;
 
-	ofLogVerbose("ofxChatGPT") << "SendData: " << requestBody.dump();
+	ofLogVerbose("ofxChatGPT") << "SendData: " << requestBody.dump(4);
 
 	ofHttpResponse response = sendRequest(urlEndpoint, requestBody.dump());
 
@@ -215,6 +215,10 @@ string ofxChatGPT::getErrorMessage(ErrorCode errorCode) {
 	default:
 		return "Unknown error";
 	}
+}
+
+void ofxChatGPT::clearConversation() {
+	conversation.clear();
 }
 
 void ofxChatGPT::eraseConversation(int beginIndex, int endIndex) {

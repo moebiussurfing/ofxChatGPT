@@ -68,6 +68,7 @@ public:
     float getTimeoutSec() {return timeoutSec;}
     
     void eraseConversation(int beginIndex, int endIndex);
+    void clearConversation();
 
     string modelName;
     string apiKey;

@@ -36,6 +36,10 @@ public:
 
     ofxChatGPT chatGPT;
 
+    void clear() {
+        chatGPT.clearConversation();
+    }
+
 private:
     string requestingMessage;
     enum RequestType {
