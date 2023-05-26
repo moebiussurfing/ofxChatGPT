@@ -14,7 +14,7 @@ public:
     bool isWaiting();
     bool hasMessage();
 
-    // Register a system message
+    // Register a system message. Defines the role.
     void setSystemMessage(string msg);
 
     // If a request is already in progress, calls to chatAsync, chatWithHistoryAsync, 
