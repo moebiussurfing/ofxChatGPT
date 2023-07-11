@@ -50,4 +50,9 @@ private:
     RequestType type;
     ofMutex mutex;
     vector<tuple<string, ofxChatGPT::ErrorCode>> availableMessages;
+
+public:
+    string getEndPoint() {
+        return chatGPT.getEndPoint();
+    }
 };

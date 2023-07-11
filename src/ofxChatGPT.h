@@ -88,5 +88,10 @@ private:
     string urlEndpoint = "https://api.openai.com/v1/chat/completions";
 
     void exit();
+
+public:
+    string getEndPoint() {
+        return urlEndpoint;
+    }
 };
 

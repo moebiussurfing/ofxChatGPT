@@ -39,9 +39,9 @@ void ofApp::setup() {
 	}
 
 	// Model
-	//string model = "gpt-3.5-turbo";
+	string model = "gpt-3.5-turbo";
 	//string model = "davinci";
-	string model = "gpt-4";
+	//string model = "gpt-4";
 
 	chat.setup(model, apiKey);
 
